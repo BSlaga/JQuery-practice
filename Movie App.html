@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Movie App</h1>
+    <form action="">
+        <input type="text" placeholder="Movie Title" id="movie-title">
+        <input type="text" placeholder="Movie Rating" id="movie-rating">
+        <button type="submit" id="submit">Submit</button>
+    </form>
+    <div>
+        <h3>Movie Ratings</h3>
+        Sort by
+        <button class="title-sorting">Movie </button>
+        <button class="rating-sorting">Rating</button>
+      <ol class="movie-list">
+
+      </ol>   
+    </div>
+   
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#submit').on('click', (e)=> {
+            e.preventDefault()
+            let movieTitle = $('#movie-title').val() 
+            let movieRating = $('#movie-rating').val()
+            
+            let shortTitle = movieTitle.replace(/ /g, '')
+            
+            if(movieRating <= 10 && movieRating >= 0) {
+               if(shortTitle.length >= 2){
+                  $('<li class='+ shortTitle +' id='+ movieRating +' >'+ movieTitle + ' ' + movieRating + ' </li>').appendTo($('ol'))
+                  $('<button>Remove</button>').appendTo('.'+ shortTitle +'').on('click', ()=>  $('.'+ shortTitle +'').remove())
+               }else{
+                  alert('Title is too short')
+               }
+            }else{
+                alert('Rating must be from 1 to 10')
+            }
+            
+        })
+         
+        
+        $('.title-sorting').on('click', ()=>{
+            let items = $('.movie-list  li').detach().sort(function (a,b){
+                return ($(a).text() < $(b).text() ? -1 : $(a).text() > $(b).text() ? 1 : 0)
+            })
+            $('.movie-list').append(items)
+        })
+        //$('.rating-sorting').on('click', ()=>{
+
+        //})
+    })
+    
+</script>
+</html>
